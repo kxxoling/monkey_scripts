@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jandan Image Previewer
 // @namespace    https://windrunner.me/
-// @version      0.1
+// @version      0.1.1
 // @description  Full screen previewer
 // @author       Kane Blueriver
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js
@@ -26,7 +26,7 @@ var inline_src = (<><![CDATA[
         top: 0;
         background: rgba(0, 0, 0, 0.6);
         display: none;
-        z-index: 10;
+        z-index: 310;
         justify-content: center;
         align-items: center;
         cursor: pointer;
