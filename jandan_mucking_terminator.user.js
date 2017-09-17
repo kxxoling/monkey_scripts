@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jandan Mucking Terminator
 // @namespace    https://windrunner.me/
-// @version      0.1
+// @version      0.1.1
 // @description  划水终结者
 // @author       Kane Blueriver
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js
@@ -15,7 +15,6 @@ var inline_src = (<><![CDATA[
     /* jshint esnext: false */
     /* jshint esversion: 6 */
 
-    // Your code here...
     function string62to10(number_code) {
         number_code = String(number_code);
         var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
@@ -54,7 +53,8 @@ var inline_src = (<><![CDATA[
         position: relative;
       }
     `;
-        document.querySelector('head').append(style);
+    document.head.append(style);
+
     const viewOrigImgLinks = document.querySelectorAll('.view_img_link');
     viewOrigImgLinks.forEach((link) => {
         const id = decode(link.href);
@@ -65,12 +65,14 @@ var inline_src = (<><![CDATA[
         viewUploader.setAttribute('href', weiboLink);
         viewUploader.setAttribute('target', '_blank');
         viewUploader.className = 'view-uploader';
-        link.append(viewUploader);
+        viewUploader.title = 'Click to view the uploader.';
+        link.after(viewUploader);
         let hasIframe = false;
         const weiboIframe = document.createElement('iframe');
         weiboIframe.setAttribute('src', `http://m.weibo.com/${id}`);
         weiboIframe.className = 'weibo-frame';
-        viewUploader.onmouseover = () => {
+        viewUploader.onclick = (ev) => {
+            ev.preventDefault();
             if (!hasIframe) {
                 viewUploader.append(weiboIframe);
             }
