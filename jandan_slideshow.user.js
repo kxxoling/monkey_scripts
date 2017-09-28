@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jandan Slideshow
 // @namespace    https://windrunner.me/
-// @version      0.1
+// @version      0.1.1
 // @description  Slideshow for Jandan images.
 // @author       Kane Blueriver
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js
@@ -83,6 +83,19 @@ var inline_src = (<><![CDATA[
   font-weight: bold;
   cursor: pointer;
 }
+
+.to {
+  cursor: pointer;
+  width: 40vw;
+  height: 100%;
+  position: absolute;
+}
+.to-left {
+  left: 0;
+}
+.to-right {
+  right: 0;
+}
     `;
     document.head.append(style);
 
@@ -98,22 +111,21 @@ var inline_src = (<><![CDATA[
         el.onclick = () => { showIndex(index); };
         slideIndicatorContainer.append(el);
     });
+
     slideContainer.innerHTML = '<div class="slide-display-container">' +
         images.map((image) => `<img class="slide-image" src="${image}" style="display: none">`).join('') +
         '</div>';
     slideContainer.append(slideIndicatorContainer);
-    document.body.append(slideContainer);
 
-    let currentScroll;
+    let currentScrollIndex;
     function showIndex(scrollIndex) {
         const slideImages = slideContainer.querySelectorAll('.slide-image');
         slideImages.forEach((image, index) => {
             if (index === scrollIndex) { image.style.display = 'flex'; }
             else { image.style.display = 'none'; }
-            currentScroll = index;
         });
+        currentScrollIndex = scrollIndex;
     }
-    showIndex(0);
 
     const toggleSlideBtn = document.createElement('button');
     toggleSlideBtn.className = 'toggle-slide';
@@ -125,7 +137,29 @@ var inline_src = (<><![CDATA[
             slideContainer.style.display = 'none';
         }
     };
+
+    const toLeft = document.createElement('div');
+    const toRight = document.createElement('div');
+    toLeft.className = 'to-left to';
+    toRight.className = 'to-right to';
+    toLeft.onclick = () => {
+        if (currentScrollIndex) {
+            showIndex(currentScrollIndex - 1);
+        } else {
+        }
+    };
+    toRight.onclick = () => {
+        if (currentScrollIndex < images.length - 1) {
+            showIndex(currentScrollIndex + 1);
+        } else {
+        }
+    };
+    const slideDisplayContainer = slideContainer.querySelector('.slide-display-container');
+    slideDisplayContainer.append(toLeft);
+    slideDisplayContainer.append(toRight);
+    document.body.append(slideContainer);
     document.body.append(toggleSlideBtn);
+    showIndex(0);
 
 /* jshint ignore:start */
 ]]></>).toString();
