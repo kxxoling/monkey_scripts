@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Twitter Image Downloader
 // @namespace    https://windrunner.me/
-// @version      0.1
+// @version      0.1.1
 // @description  Twitter Image Downloader
 // @author       Kane Blueriver
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js
@@ -15,6 +15,7 @@ var inline_src = (<><![CDATA[
     /* jshint esnext: false */
     /* jshint esversion: 6 */
 
+    // Your code here...
     function downloadImages(ev) {
         ev.preventDefault();
         const tweet = document.querySelector('.permalink .permalink-tweet-container .tweet');
@@ -22,14 +23,15 @@ var inline_src = (<><![CDATA[
         const tweetImages = tweet.querySelectorAll('.AdaptiveMedia-photoContainer img');
         tweetImages.forEach((img) => {
             const pk = location.href.split('/').pop();
-
-            fetch(img.src).then((rsp) => rsp.blob()).then((blob)=> {
+            const username = location.href.split('/')[3];
+            const orig_src = img.src + ':orig';
+            fetch(orig_src).then((rsp) => rsp.blob()).then((blob)=> {
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
-                link.setAttribute('download', `${pk}_${tweetText.substring(0, 20)}_${img.src.split('/media/')[1].split(':large')[0]}`);
+                link.setAttribute('download', `[${username}]_${pk}_${tweetText.substring(0, 20)}_${img.src.split('/media/')[1].split(':large')[0]}`);
                 document.body.appendChild(link);
                 link.click();
-                console.log(`Downloading ${img.src} as ${link.download}`);
+                console.log(`Downloading ${orig_src} as ${link.download}`);
             });
         });
     }
