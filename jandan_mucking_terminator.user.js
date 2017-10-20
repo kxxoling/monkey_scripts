@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         Jandan Mucking Terminator
 // @namespace    https://windrunner.me/
-// @version      0.1.1
+// @version      0.1.2
 // @description  划水终结者
 // @author       Kane Blueriver
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.16.0/polyfill.js
-// @match        http://jandan.net/*
+// @match        https://jandan.net/*
 // ==/UserScript==
 
 /* jshint ignore:start */
