@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         SauceNAO Drag and Drop Uploader
 // @namespace    https://windrunner.me/
-// @version      0.1
-// @description  Description
+// @version      0.2.0
+// @description  Drag and Drop to search image on SauceNAO.com
 // @author       Kane Blueriver
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.16.0/polyfill.js
@@ -18,28 +18,31 @@ var inline_src = (<><![CDATA[
     const style = document.createElement('style');
     style.innerHTML = `
 .drag-uploader {
-  width: 400px;
-  height: 300px;
+  width: 100vw;
+  height: 100vh;;
+  position: fixed;
+  top: 0;
+  left: 0;
   background-color: #e0f0fe;
   outline: 2px dashed #000;
   outline-offset: -4px;
-  display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  right: 0;
-  top: 20vh;
+  opacity: 0.6;
+  display: none;
 }
 
 .drag-uploader.dragon {
   background-color: #fff;
+  display: flex;
 }
 
 .drag-uploader .text {
   color: #555;
+  font-size: 4rem;
 }
 .drag-uploader input {
-    display: none;
+  display: none;
 }
     `;
     document.head.append(style);
@@ -52,16 +55,21 @@ var inline_src = (<><![CDATA[
     dragUploader.action = 'search.php';
     dragUploader.method = 'post';
     dragUploader.enctype = 'multipart/form-data';
-    dragUploader.innerHTML = `<div class="text">Drag image here.</div>`;
+    dragUploader.innerHTML = `<div class="text">Drop image here.</div>`;
 
     const input = document.createElement('input');
     input.name = 'file';
     input.type = 'file';
 
     dragUploader.append(input);
-    dragUploader.ondragover = () => {
+
+    document.body.ondragover = () => {
         dragUploader.classList.add('dragon');
     };
+    dragUploader.ondragleave = () => {
+        dragUploader.classList.remove('dragon');
+    };
+
     dragUploader.ondrop = (ev) => {
         ev.preventDefault();
         const files = ev.dataTransfer.files;
@@ -69,11 +77,11 @@ var inline_src = (<><![CDATA[
         input.files = files;
         dragUploader.submit();
     };
-    dragUploader.onDragend = (ev) => {
+    dragUploader.ondragend = (ev) => {
         ev.preventDefault();
         ev.stopPropagation();
     };
-    dragUploader.onDragstart = (ev) => {
+    dragUploader.ondragstart = (ev) => {
         ev.preventDefault();
     };
     document.body.append(dragUploader);
