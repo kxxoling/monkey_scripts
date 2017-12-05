@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Video Snapshot
 // @namespace    https://windrunner.me/
-// @version      0.1.0
+// @version      0.2.0
 // @description  YouTube Video Snapshot
 // @author       Kane Blueriver
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js
@@ -24,8 +24,8 @@ var inline_src = (<><![CDATA[
             .drawImage(video, 0, 0, canvas.width, canvas.height);
         var img = document.createElement("img");
         canvas.toBlob(downloadBlob);
-
     };
+
     const downloadBlob = (blob) => {
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
@@ -35,17 +35,26 @@ var inline_src = (<><![CDATA[
     };
 
     const captureBtn = document.createElement('button');
+    captureBtn.setAttribute('title', 'Click or press F12 to a snapshot of the video');
     captureBtn.innerText = 'Capture';
     captureBtn.style.position = 'fixed';
     captureBtn.style.right = '1rem';
     captureBtn.style.bottom = '1rem';
+    captureBtn.style.cursor = 'pointer';
     captureBtn.style['z-index'] = 10;
-    captureBtn.onclick = () => {
+    function capture() {
         const videoEl = document.querySelector('#movie_player > div.html5-video-container > video');
         captureVideo(videoEl);
-    };
+    }
+    captureBtn.onclick = capture;
     document.body.append(captureBtn);
 
+    const keyF12 = 123;
+    document.addEventListener('keydown', (event) => {
+        if(event.keyCode === keyF12) {
+            capture();
+        }
+    });
 /* jshint ignore:start */
 ]]></>).toString();
 var c = Babel.transform(inline_src, { presets: [ "es2015", "es2016" ] });
