@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jandan Slideshow
 // @namespace    https://windrunner.me/
-// @version      0.1.3
+// @version      0.1.4
 // @description  Slideshow for Jandan images.
 // @author       Kane Blueriver
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js
@@ -160,7 +160,26 @@ var inline_src = (<><![CDATA[
     document.body.append(slideContainer);
     document.body.append(toggleSlideBtn);
     showIndex(0);
-
+    const keyEsc = 27;
+    const keyLeft = 37;
+    const keyRight = 39;
+    const keyInspect = 73;
+    document.addEventListener('keydown', (ev) => {
+        switch (ev.keyCode) {
+            case keyEsc:
+                slideContainer.style.display = 'none';
+                break;
+            case keyLeft:
+                toLeft.click();
+                break;
+            case keyRight:
+                toRight.click();
+                break;
+            case keyInspect:
+                slideContainer.style.display = 'block';
+                break;
+        }
+    });
 /* jshint ignore:start */
 ]]></>).toString();
 var c = Babel.transform(inline_src, { presets: [ "es2015", "es2016" ] });
