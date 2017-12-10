@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jandan Image Previewer
 // @namespace    https://windrunner.me/
-// @version      0.1.3
+// @version      0.1.4
 // @description  Full screen previewer
 // @author       Kane Blueriver
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js
@@ -46,7 +46,10 @@ var inline_src = (<><![CDATA[
       }
     `;
     document.querySelector('head').append(style);
-    document.querySelector('body').insertAdjacentHTML('beforeend', '<div class="full-screen-previewer"><img class="" src=""><a class="downloader" href="" download>Download!</></div>');
+    document.querySelector('body').insertAdjacentHTML('beforeend', `<div class="full-screen-previewer">
+      <img class="" src="">
+      <a class="downloader" href="" download>Download!<a/>
+    </div>`);
     const fullScreenContainer = document.querySelector('.full-screen-previewer');
     const fullScreenImage = fullScreenContainer.querySelector('img');
     const downloader = fullScreenContainer.querySelector('a');
@@ -61,6 +64,12 @@ var inline_src = (<><![CDATA[
             downloader.setAttribute('href', href);
             fullScreenContainer.classList.add('active');
         };
+    });
+    const keyEsc = 27;
+    document.addEventListener('keydown', (ev) => {
+        if (ev.keyCode === keyEsc) {
+            fullScreenContainer.classList.remove('active');
+        }
     });
 /* jshint ignore:start */
 ]]></>).toString();
