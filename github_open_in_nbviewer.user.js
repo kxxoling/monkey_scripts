@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name         GitHub nbviewer
 // @namespace    https://windrunner.me/
-// @version      0.1
+// @version      0.1.1
 // @description  Jump to nbviewer
 // @author       Kane Blueriver
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.16.0/polyfill.js
 // @match        https://*.github.com/*.ipynb
+// @match        https://github.com/*.ipynb
 // ==/UserScript==
 
 /* jshint ignore:start */
@@ -23,8 +24,7 @@ var inline_src = (<><![CDATA[
     nbviewer_btn.setAttribute('class', 'btn btn-sm BtnGroup-item');
     nbviewer_btn.innerText = 'Open in nbviewer';
     nbviewer_btn.style.cssText = `
-      color: yellow;
-      background: red;
+      color: #E46E2E;
     `;
 
     const fileBtnGroup = document.getElementsByClassName('file-actions')[0].getElementsByClassName('BtnGroup')[0];
