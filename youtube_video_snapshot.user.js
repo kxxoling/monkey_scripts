@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Video Snapshot
 // @namespace    https://windrunner.me/
-// @version      0.2.0
+// @version      0.2.1
 // @description  YouTube Video Snapshot
 // @author       Kane Blueriver
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js
@@ -29,7 +29,8 @@ var inline_src = (<><![CDATA[
     const downloadBlob = (blob) => {
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.setAttribute('download', 'screenshot.png');
+        const title = document.querySelector('h1.title').innerText;
+        link.setAttribute('download', `${title}.png`);
         document.body.appendChild(link);
         link.click();
     };
