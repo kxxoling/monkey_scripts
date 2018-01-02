@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub Image FancyBox
 // @namespace    https://windrunner.me/
-// @version      0.1.0
+// @version      0.1.1
 // @description  GitHub Image FancyBox
 // @author       Kane Blueriver
 // @match        https://github.com/*
@@ -36,5 +36,4 @@
         parent.setAttribute('href', $el.src);
         $(parent).fancybox(config);
     });
-    $('article a').fancybox(config);
 })();
