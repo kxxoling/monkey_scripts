@@ -1,9 +1,14 @@
 // ==UserScript==
-// @name         Jandan Image Previewer
+// @name         Jandan Fancy Viewer
 // @namespace    https://windrunner.me/
-// @version      0.1.4
-// @description  Full screen previewer
+// @version      0.2.0
+// @description  Fancy Image Viewer for Jandan
 // @author       Kane Blueriver
+// @require      https://code.jquery.com/jquery-3.2.1.min.js
+// @require      https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js
+// @resource     fancyboxCSS https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css
+// @grant        GM_getResourceText
+// @grant        GM_addStyle
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.16.0/polyfill.js
 // @match        http*://*.jandan.net/*
@@ -15,62 +20,25 @@ var inline_src = (<><![CDATA[
     /* jshint esnext: false */
     /* jshint esversion: 6 */
 
-    // Your code here...
-    const style = document.createElement('style');
-    style.innerHTML = `
-      .full-screen-previewer {
-        height: 100vh;
-        width: 100vw;
-        position: fixed;
-        left: 0;
-        top: 0;
-        background: rgba(0, 0, 0, 0.6);
-        display: none;
-        z-index: 310;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-      }
-      .full-screen-previewer.active {
-        display: flex;
-      }
-      .full-screen-previewer img {
-        max-height: 90%;
-        max-width: 90%;
-      }
-      .full-screen-previewer .downloader {
-        position: fixed;
-        right: 1rem;
-        bottom: 1rem;
-        color: white;
-      }
-    `;
-    document.querySelector('head').append(style);
-    document.querySelector('body').insertAdjacentHTML('beforeend', `<div class="full-screen-previewer">
-      <img class="" src="">
-      <a class="downloader" href="" download>Download!<a/>
-    </div>`);
-    const fullScreenContainer = document.querySelector('.full-screen-previewer');
-    const fullScreenImage = fullScreenContainer.querySelector('img');
-    const downloader = fullScreenContainer.querySelector('a');
-    fullScreenContainer.onclick = () => {fullScreenContainer.classList.remove('active');};
+    GM_addStyle(GM_getResourceText('fancyboxCSS'));
 
     const viewOrigImgLinks = document.querySelectorAll('.view_img_link');
     viewOrigImgLinks.forEach((link) => {
         const href = link.href;
-        link.onclick = (ev) => {
-            ev.preventDefault();
-            fullScreenImage.setAttribute('src', href);
-            downloader.setAttribute('href', href);
-            fullScreenContainer.classList.add('active');
-        };
+        link.setAttribute('data-fancybox', href);
     });
-    const keyEsc = 27;
-    document.addEventListener('keydown', (ev) => {
-        if (ev.keyCode === keyEsc) {
-            fullScreenContainer.classList.remove('active');
-        }
-    });
+    const config = {
+        arrows: false,
+        buttons: [
+            'slideShow',
+            'fullScreen',
+            'thumbs',
+            'download',
+            'zoom',
+            'close'
+        ],
+    };
+    $('.commentlist .row .text a').fancybox(config);
 /* jshint ignore:start */
 ]]></>).toString();
 var c = Babel.transform(inline_src, { presets: [ "es2015", "es2016" ] });
