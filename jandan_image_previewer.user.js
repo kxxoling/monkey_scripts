@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jandan Fancy Viewer
 // @namespace    https://windrunner.me/
-// @version      0.2.0
+// @version      0.2.1
 // @description  Fancy Image Viewer for Jandan
 // @author       Kane Blueriver
 // @require      https://code.jquery.com/jquery-3.2.1.min.js
@@ -38,7 +38,7 @@ var inline_src = (<><![CDATA[
             'close'
         ],
     };
-    $('.commentlist .row .text a').fancybox(config);
+    $('.commentlist .row .text a.view_img_link').fancybox(config);
 /* jshint ignore:start */
 ]]></>).toString();
 var c = Babel.transform(inline_src, { presets: [ "es2015", "es2016" ] });
