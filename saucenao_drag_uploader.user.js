@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SauceNAO Drag and Drop Uploader
 // @namespace    https://windrunner.me/
-// @version      0.2.1
+// @version      0.2.2
 // @description  Drag and Drop to search image on SauceNAO.com
 // @author       Kane Blueriver
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js
@@ -19,6 +19,9 @@ var inline_src = (<><![CDATA[
     style.innerHTML = `
 body {
   min-height: 100vh;
+}
+body, ul {
+  margin: 0;
 }
 #mainarea {
   margin-top: 0;
