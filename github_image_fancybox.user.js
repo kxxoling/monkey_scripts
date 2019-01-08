@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub Image FancyBox
 // @namespace    https://windrunner.me/
-// @version      0.1.2
+// @version      0.1.3
 // @description  GitHub Image FancyBox
 // @author       Kane Blueriver
 // @match        https://github.com/*
@@ -31,7 +31,7 @@
         ],
     };
 
-    $.each($('.readme article a img'), function(index, $el) {
+    $.each($('#readme article a img'), function(index, $el) {
         var parent = $el.parentNode;
         if (parent.href === $el.src || $el.src.replace('raw', 'blob') === parent.href) {
             parent.setAttribute('href', $el.src);
