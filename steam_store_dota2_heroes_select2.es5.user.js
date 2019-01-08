@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Dota2 Heroes Select2 ES5
 // @namespace    https://windrunner.me/
-// @version      0.1.1
+// @version      0.2.0
 // @description  A jQuery Select2 extended Dota2 heroes select menu
 // @author       Kane Blueriver
 // @match        https://steamcommunity.com/market/search*appid=570*
@@ -19,9 +19,9 @@
         var advancedOptions = document.querySelector('.market_search_advanced_button');
         advancedOptions.addEventListener('click', function() {
             setTimeout(function() {
-                var heroSelect = document.querySelector('select[name="category_570_Hero[]"]');
-                console.log(advancedOptions, heroSelect);
-                $(heroSelect).select2();
+                $('select[name="category_570_Hero[]"]').select2();
+                $('select[name="category_570_Slot[]"]').select2();
+                $('select[name="category_570_Type[]"]').select2();
             }, 300);
         });
     })(jQuery);
