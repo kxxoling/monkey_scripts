@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub Image FancyBox
 // @namespace    https://windrunner.me/
-// @version      0.1.3
+// @version      0.2.0
 // @description  GitHub Image FancyBox
 // @author       Kane Blueriver
 // @match        https://github.com/*
@@ -13,7 +13,7 @@
 // @grant        GM_addStyle
 // ==/UserScript==
 
-(function() {
+(function($) {
     'use strict';
 
     var newCSS = GM_getResourceText('customCSS');
@@ -31,11 +31,14 @@
         ],
     };
 
-    $.each($('#readme article a img'), function(index, $el) {
+    var fancify = function(index, $el) {
         var parent = $el.parentNode;
         if (parent.href === $el.src || $el.src.replace('raw', 'blob') === parent.href) {
             parent.setAttribute('href', $el.src);
             $(parent).fancybox(config);
         }
-    });
-})();
+    }
+
+    $.each($('#readme article a img'), fancify);
+    $.each($('tbody a > img'), fancify);
+})($);
