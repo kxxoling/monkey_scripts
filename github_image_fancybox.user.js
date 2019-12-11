@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub Image FancyBox
 // @namespace    https://windrunner.me/
-// @version      0.2.0
+// @version      0.3.0
 // @description  GitHub Image FancyBox
 // @author       Kane Blueriver
 // @match        https://github.com/*
@@ -37,8 +37,13 @@
             parent.setAttribute('href', $el.src);
             $(parent).fancybox(config);
         }
+        if (parent.tagName.toLowerCase() === 'p') {
+            parent.innerHTML = '<a href="'+ $el.src +'"><img src="'+ $el.src + '"></a>'
+            $(parent.querySelector('a')).fancybox(config);
+        }
     }
 
-    $.each($('#readme article a img'), fancify);
-    $.each($('tbody a > img'), fancify);
+    $.each($('#readme article a img'), fancify); // README pages
+    $.each($('tbody a > img'), fancify); // issue pages
+    $.each($('#wiki-body img'), fancify); // wiki pages
 })($);
