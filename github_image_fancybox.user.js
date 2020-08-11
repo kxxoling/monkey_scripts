@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         GitHub Image FancyBox
 // @namespace    https://windrunner.me/
-// @version      0.3.0
+// @version      0.3.1
 // @description  GitHub Image FancyBox
 // @author       Kane Blueriver
 // @match        https://github.com/*
 // @match        https://gist.github.com/*
-// @require      https://code.jquery.com/jquery-3.2.1.min.js
-// @require      https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js
-// @resource     customCSS https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css
+// @require      https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js
+// @require      https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js
+// @resource     fancyBoxCSS https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css
 // @grant        GM_getResourceText
 // @grant        GM_addStyle
 // ==/UserScript==
@@ -16,8 +16,7 @@
 (function($) {
     'use strict';
 
-    var newCSS = GM_getResourceText('customCSS');
-    GM_addStyle(newCSS);
+    GM_addStyle(GM_getResourceText('fancyBoxCSS'));
 
     var config = {
         arrows: false,
@@ -33,7 +32,9 @@
 
     var fancify = function(index, $el) {
         var parent = $el.parentNode;
-        if (parent.href === $el.src || $el.src.replace('raw', 'blob') === parent.href) {
+        if (parent.href === $el.src
+            || $el.src.replace('raw', 'blob') === parent.href
+            || parent.href===$el.dataset.canonicalSrc) {
             parent.setAttribute('href', $el.src);
             $(parent).fancybox(config);
         }
