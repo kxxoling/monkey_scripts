@@ -40,8 +40,8 @@ var inline_src = (<><![CDATA[
     const style = document.createElement('style');
     style.innerHTML = `
       .weibo-frame {
-        width: 420px;
-        height: 280px;
+        width: 600px;
+        height: 400px;
         position: absolute;
         top: 0;
         left: 0;
@@ -58,7 +58,7 @@ var inline_src = (<><![CDATA[
     const viewOrigImgLinks = document.querySelectorAll('.view_img_link');
     viewOrigImgLinks.forEach((link) => {
         const id = decode(link.href);
-        const weiboLink = `http://weibo.com/${id}`;
+        const weiboLink = `//weibo.com/${id}`;
         const viewUploader = document.createElement('a');
 
         viewUploader.innerHTML = ' [View Uploader]';
@@ -69,7 +69,7 @@ var inline_src = (<><![CDATA[
         link.after(viewUploader);
         let hasIframe = false;
         const weiboIframe = document.createElement('iframe');
-        weiboIframe.setAttribute('src', `http://m.weibo.com/${id}`);
+        weiboIframe.setAttribute('src', `//weibo.com/${id}`); // m.weibo.com is blocked since cross-origin iframe
         weiboIframe.className = 'weibo-frame';
         viewUploader.onclick = (ev) => {
             ev.preventDefault();
